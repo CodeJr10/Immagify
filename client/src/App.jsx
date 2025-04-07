@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 
 import BuyCredit from "./pages/BuyCredit";
+import Footer from "./components/footer";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import React from "react";
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="/result" element={<Result />} />
         <Route path="/buy" element={<BuyCredit />} />
       </Routes>
+      <Footer />
     </div>
   );
 };
