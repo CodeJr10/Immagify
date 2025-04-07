@@ -8,7 +8,7 @@ const Steps = () => {
 
       <p className="text-lg text-gray-600 mb-8">
         {" "}
-        Transform WordsInto Stunning Images{" "}
+        Transform Words Into Stunning Images{" "}
       </p>
       <div className="space-y-4 w-full max-w-3xl text-sm">
         {stepsData.map((item, index) => (
