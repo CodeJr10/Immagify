@@ -1,4 +1,5 @@
 import Description from "../components/Description";
+import GenerateBtn from "../components/GenerateBtn";
 import Header from "../components/Header";
 import React from "react";
 import Steps from "../components/Steps";
@@ -11,6 +12,7 @@ const Home = () => {
       <Steps />
       <Description />
       <Testimonials />
+      <GenerateBtn />
     </div>
   );
 };
