@@ -16,7 +16,10 @@ const BuyCredit = () => {
 
       <div className="flex flex-wrap justify-center gap-6 text-left ">
         {plans.map((item, index) => (
-          <div className="bg-white drop-shadow=sm border " key={index}>
+          <div
+            className="bg-white drop-shadow-sm border rounded-lg py-12 px-8 text-gray-600 hover:scale-105 transition-all duration-500"
+            key={index}
+          >
             <img src={assets.lock_icon} alt="" className="" />
             <p className="mt-3 mb-1 font-semibold">{item.id}</p>
             <p className="text-sm">{item.desc} </p>
@@ -24,7 +27,7 @@ const BuyCredit = () => {
               <span className="text-3xl font-medium"> ${item.price}</span>/
               {item.credits} credits.
             </p>
-            <button className="w=full bg-gray-500 text-white mt-8 text-sm rounded-md py-2.5 min-w-52 ">
+            <button className="w=full bg-gray-800 text-white mt-8 text-sm rounded-md py-2.5 min-w-52 ">
               {user ? "Purchase" : "Get Started"}
             </button>
           </div>
