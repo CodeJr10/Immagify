@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 
 import { AppContext } from "../context/AppContext";
 import { assets } from "../assets/assets";
+import { motion } from "motion/react";
 
 const Login = () => {
   const [state, setState] = useState("Login");
@@ -15,7 +16,13 @@ const Login = () => {
   });
   return (
     <div className="fixed top-0 left-0 right-0 bottom-0 backdrop-blur-sm bg-black/30 flex justify-center items-center z-10">
-      <form className="relative bg-white p-10 rounded-xl text-slate-500">
+      <motion.form
+        initial={{ opacity: 0.2, y: 50 }}
+        transition={{ duration: 1 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="relative bg-white p-10 rounded-xl text-slate-500"
+      >
         <h1>{state}</h1>
         <p className="text-sm">Welcome Back! Please sign in to continue</p>
         {state !== "Login" && (
@@ -84,7 +91,7 @@ const Login = () => {
           className="absolute top-5 right-5 cursor-pointer"
           onClick={() => setShowLogin(false)}
         />
-      </form>
+      </motion.form>
     </div>
   );
 };
