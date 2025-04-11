@@ -14,7 +14,7 @@ const Login = () => {
     };
   });
   return (
-    <div className="absolute top-0 left-0 right-0 bottom-0 backdrop-blur-sm bg-black/30 flex justify-center items-center z-10">
+    <div className="fixed top-0 left-0 right-0 bottom-0 backdrop-blur-sm bg-black/30 flex justify-center items-center z-10">
       <form className="relative bg-white p-10 rounded-xl text-slate-500">
         <h1>{state}</h1>
         <p className="text-sm">Welcome Back! Please sign in to continue</p>
