@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import userModel from "../models/userModel";
+import userModel from "../models/userModel.js";
 
 const registerUser = async (req, res) => {
   try {
@@ -23,37 +23,36 @@ const registerUser = async (req, res) => {
     const user = await newUser.save();
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
 
-    res.json({success: true, token, user: {name: user.name}})
+    res.json({ success: true, token, user: { name: user.name } });
   } catch (error) {
     console.log(error);
-    res.json({success: false, message: error.message})
+    res.json({ success: false, message: error.message });
   }
 };
 
-
 const loginUser = async (req, res) => {
   try {
-    const {email, password} = req.body
+    const { email, password } = req.body;
 
-    const user = await userModel.findOne({email})
+    const user = await userModel.findOne({ email });
 
-    if(!user){
-      return res({success: false, message})
+    if (!user) {
+      return res({ success: false, message });
     }
 
-    const isMatch = await.bcrypt.compare(password, user.password)
+    const isMatch = await bcrypt.compare(password, user.password);
 
-    if(isMatch){
+    if (isMatch) {
+      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
 
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-
-    res.json({success: true, token, user: {name: user.name}})
-
-    }else{
-      return res({success:false, message: 'Invalid credentials'})
+      res.json({ success: true, token, user: { name: user.name } });
+    } else {
+      return res({ success: false, message: "Invalid credentials" });
     }
   } catch (error) {
-      console.log(error);
-    res.json({success: false, message: error.message})
+    console.log(error);
+    res.json({ success: false, message: error.message });
   }
-}
+};
+
+export { registerUser, loginUser };
