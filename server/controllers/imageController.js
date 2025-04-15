@@ -1,6 +1,6 @@
 import FormData from "form-data";
 import axios from "axios";
-import userModel from "../models/userModel";
+import userModel from "../models/userModel.js";
 
 export const generateImage = async (req, res) => {
   try {
@@ -23,14 +23,18 @@ export const generateImage = async (req, res) => {
     const formData = new FormData();
     formData.append("prompt", prompt);
 
-    await axios.post("https://clipdrop-api.co/text-to-image/v1", formData, {
-      headers: {
-        "x-api-key": process.env.CLIPDROP_API,
-      },
-      responseType: "arraybuffer",
-    });
+    const { data } = await axios.post(
+      "https://clipdrop-api.co/text-to-image/v1",
+      formData,
+      {
+        headers: {
+          "x-api-key": process.env.CLIPDROP_API,
+        },
+        responseType: "arraybuffer",
+      }
+    );
 
-    const base64Image = Buffer.from(DataTransfer, "binary").toString("base64");
+    const base64Image = Buffer.from(data, "binary").toString("base64");
 
     const resultImage = `data:image/png;base64, ${base64Image}`;
 
