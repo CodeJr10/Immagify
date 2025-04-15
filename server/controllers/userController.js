@@ -37,7 +37,7 @@ const loginUser = async (req, res) => {
     const user = await userModel.findOne({ email });
 
     if (!user) {
-      return res({ success: false, message });
+      return res.json({ success: false, message: "Incorrect email" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -47,7 +47,7 @@ const loginUser = async (req, res) => {
 
       res.json({ success: true, token, user: { name: user.name } });
     } else {
-      return res({ success: false, message: "Invalid credentials" });
+      return res.json({ success: false, message: "Invalid credentials" });
     }
   } catch (error) {
     console.log(error);
