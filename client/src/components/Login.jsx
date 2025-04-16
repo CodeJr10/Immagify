@@ -28,7 +28,7 @@ const Login = () => {
         if (data.success) {
           setToken(data.token);
           setUser(data.user);
-          localStorage.getItem("token", data.token);
+          localStorage.setItem("token", data.token);
           setShowLogin(false);
         } else {
           toast.error(data.message);
@@ -43,7 +43,7 @@ const Login = () => {
         if (data.success) {
           setToken(data.token);
           setUser(data.user);
-          localStorage.getItem("token", data.token);
+          localStorage.setItem("token", data.token);
           setShowLogin(false);
         } else {
           toast.error(data.message);
@@ -102,9 +102,9 @@ const Login = () => {
           <input
             onChange={(e) => setPassword(e.target.value)}
             value={password}
-            type="text"
+            type="password"
             className="outline-none text-sm"
-            placeholder="Full Name"
+            placeholder="Password"
             required
           />
         </div>
