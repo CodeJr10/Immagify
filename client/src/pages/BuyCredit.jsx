@@ -8,7 +8,7 @@ const BuyCredit = () => {
   const { user } = useContext(AppContext);
   return (
     <motion.div className="min-h-[80vh] text-center pt-14 mb-10">
-      <button
+      <motion.button
         className="border border-gray-400 px-10 py-2 rounded-full mb-6"
         initial={{ opacity: 0.2, y: 100 }}
         transition={{ duration: 1 }}
@@ -16,7 +16,7 @@ const BuyCredit = () => {
         viewport={{ once: true }}
       >
         Our Plans
-      </button>
+      </motion.button>
       <h1 className="text-center text-3xl font-medium mb-6 sm:mb-10">
         Choose the plan
       </h1>

@@ -27,7 +27,7 @@ const Navbar = () => {
                 Credits left: {credit}
               </p>
             </button>
-            <p className="text-gray-600max-sm:hidden pl-4 ">Hi, {user.name}</p>
+            <p className="text-gray-600 max-sm:hidden pl-4 ">Hi, {user.name}</p>
             <div className="relative group">
               <img
                 src={assets.profile_icon}
