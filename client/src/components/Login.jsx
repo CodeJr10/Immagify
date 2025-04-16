@@ -2,11 +2,57 @@ import React, { useContext, useEffect, useState } from "react";
 
 import { AppContext } from "../context/AppContext";
 import { assets } from "../assets/assets";
+import axios from "axios";
 import { motion } from "motion/react";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [state, setState] = useState("Login");
-  const { setShowLogin } = useContext(AppContext);
+  const { setShowLogin, backendUrl, setToken, setUser } =
+    useContext(AppContext);
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+
+    try {
+      if (state === "Login") {
+        const { data } = await axios.post(backendUrl + "/api/user/login", {
+          email,
+          password,
+        });
+
+        if (data.success) {
+          setToken(data.token);
+          setUser(data.user);
+          localStorage.getItem("token", data.token);
+          setShowLogin(false);
+        } else {
+          toast.error(data.message);
+        }
+      } else {
+        const { data } = await axios.post(backendUrl + "/api/user/register", {
+          name,
+          email,
+          password,
+        });
+
+        if (data.success) {
+          setToken(data.token);
+          setUser(data.user);
+          localStorage.getItem("token", data.token);
+          setShowLogin(false);
+        } else {
+          toast.error(data.message);
+        }
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
   useEffect(() => {
     document.body.style.overflow = "hidden";
 
@@ -17,6 +63,7 @@ const Login = () => {
   return (
     <div className="fixed top-0 left-0 right-0 bottom-0 backdrop-blur-sm bg-black/30 flex justify-center items-center z-10">
       <motion.form
+        onSubmit={onSubmitHandler}
         initial={{ opacity: 0.2, y: 50 }}
         transition={{ duration: 1 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -29,6 +76,8 @@ const Login = () => {
           <div className="border px-6 py-2 flex items-center gap-2 rounded-full mt-5">
             <img src={assets.email_icon} alt="" />
             <input
+              onChange={(e) => setName(e.target.value)}
+              value={name}
               type="text"
               className="outline-none text-sm"
               placeholder="Full Name"
@@ -39,6 +88,8 @@ const Login = () => {
         <div className="border px-6 py-2 flex items-center gap-2 rounded-full mt-5">
           <img src={assets.email_icon} alt="" />
           <input
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
             type="email"
             className="outline-none text-sm"
             placeholder="Email Id"
@@ -49,6 +100,8 @@ const Login = () => {
         <div className="border px-6 py-2 flex items-center gap-2 rounded-full mt-5">
           <img src={assets.lock_icon} alt="" />
           <input
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
             type="text"
             className="outline-none text-sm"
             placeholder="Full Name"
