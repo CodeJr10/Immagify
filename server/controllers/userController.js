@@ -76,62 +76,38 @@ const userCredits = async (req, res) => {
 
 const razorpayInstance = new razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_SECRET,
+  key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
 const paymentRazorpay = async (req, res) => {
   try {
-    const { userId, planId } = req.body;
+    const { planId } = req.body;
+    const userId = req.user.id;
+
     const userData = await userModel.findById(userId);
 
-    if (!userId || planId) {
+    if (!userId || !planId) {
       return res.json({ success: false, message: "Missing Details" });
     }
 
     let credits, plan, amount, date;
-
-    const transactionData = {
-      userId,
-      plan,
-      credits,
-      plan,
-      amount,
-      date,
-    };
-
-    const newTransaction = await transactionModel.create(transactionData);
-
-    const option = {
-      amount: amount * 100,
-      currency: process.env.CURRENCY,
-      receipt: newTransaction._id,
-    };
-
-    await razorpayInstance.orders.create(Option, (error, order) => {
-      if (error) {
-        return res.json({ success: false, message: error.message });
-      }
-
-      res.json({ success: true, order });
-    });
-
     switch (planId) {
       case "Basic":
-        plan: "Basic";
-        credits: 100;
-        amount: 10;
+        plan = "Basic";
+        credits = 100;
+        amount = 10;
         break;
 
       case "Advanced":
-        plan: "Advanced";
-        credits: 500;
-        amount: 50;
+        plan = "Advanced";
+        credits = 500;
+        amount = 50;
         break;
 
       case "Business":
-        plan: "Business";
-        credits: 5000;
-        amount: 250;
+        plan = "Business";
+        credits = 5000;
+        amount = 250;
         break;
 
       default:
@@ -139,6 +115,27 @@ const paymentRazorpay = async (req, res) => {
     }
 
     date = Date.now();
+    const transactionData = {
+      userId,
+      plan,
+      credits,
+      amount,
+      date,
+    };
+    const newTransaction = await transactionModel.create(transactionData);
+
+    const options = {
+      amount: amount * 100,
+      currency: process.env.CURRENCY,
+      receipt: newTransaction._id,
+    };
+
+    const order = await razorpayInstance.orders.create(
+      options,
+      (error, order) => {
+        res.json({ success: true, order });
+      }
+    );
   } catch (error) {
     res.json({ success: false, message: error.message });
   }
