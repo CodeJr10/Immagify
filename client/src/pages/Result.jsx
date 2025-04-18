@@ -33,7 +33,7 @@ const Result = () => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       onSubmit={onSubmitHandler}
-      className="flex flex-col min-h-[90vh justify-center items-center"
+      className="flex flex-col min-h-[90vh] justify-center items-center"
     >
       <div>
         <div className="relative">
@@ -74,9 +74,9 @@ const Result = () => {
             Generate Another
           </p>
           <a
-            href=""
+            href={image}
             className=" bg-zinc-900 px-10 py-3 rounded-full cursor-pointer"
-            download={image}
+            download="generated_image.png"
           >
             Download
           </a>
