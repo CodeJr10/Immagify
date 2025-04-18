@@ -4,8 +4,8 @@ import userModel from "../models/userModel.js";
 
 export const generateImage = async (req, res) => {
   try {
-    const { userId, prompt } = req.body;
-
+    const prompt = req.body.prompt;
+    const userId = req.user.id;
     const user = await userModel.findById(userId);
 
     if (!user || !prompt) {
