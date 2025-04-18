@@ -1,10 +1,10 @@
 import jwt from "jsonwebtoken";
 
-const userAuth = async (req, resizeBy, next) => {
+const userAuth = async (req, res, next) => {
   const { token } = req.headers;
 
   if (!token) {
-    return resizeBy.json({
+    return res.json({
       success: false,
       message: "Not Authorized Login Again",
     });
@@ -14,17 +14,16 @@ const userAuth = async (req, resizeBy, next) => {
     const tokenDecode = jwt.verify(token, process.env.JWT_SECRET);
 
     if (tokenDecode.id) {
-      req.body.userId = tokenDecode.id;
+      req.user = { id: tokenDecode.id }; // ✅ Standard practice
+      next();
     } else {
-      return resizeBy.json({
+      return res.json({
         success: false,
         message: "Not Authorized. Login Again",
       });
     }
-
-    next();
   } catch (error) {
-    resizeBy.json({ success: false, message: error.message });
+    res.json({ success: false, message: error.message });
   }
 };
 

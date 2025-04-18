@@ -24,7 +24,7 @@ const AppContextProvider = (props) => {
         setUser(data.user);
       }
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
       toast.error(error.message);
     }
   };
