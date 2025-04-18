@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import razorpay from "razorpay";
+import transactionModel from "../models/transactionModel.js";
 import userModel from "../models/userModel.js";
 
 const registerUser = async (req, res) => {
@@ -98,6 +99,22 @@ const paymentRazorpay = async (req, res) => {
       date,
     };
 
+    const newTransaction = await transactionModel.create(transactionData);
+
+    const option = {
+      amount: amount * 100,
+      currency: process.env.CURRENCY,
+      receipt: newTransaction._id,
+    };
+
+    await razorpayInstance.orders.create(Option, (error, order) => {
+      if (error) {
+        return res.json({ success: false, message: error.message });
+      }
+
+      res.json({ success: true, order });
+    });
+
     switch (planId) {
       case "Basic":
         plan: "Basic";
@@ -127,4 +144,4 @@ const paymentRazorpay = async (req, res) => {
   }
 };
 
-export { registerUser, loginUser, userCredits };
+export { registerUser, loginUser, userCredits, paymentRazorpay };
