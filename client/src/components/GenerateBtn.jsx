@@ -33,8 +33,8 @@ const GenerateBtn = () => {
         onClick={onClickHandler}
       >
         Generate Images
+        <img src={assets.star_group} alt="" className="h-6" />
       </button>
-      <img src={assets.star_group} alt="" className="h-6" />
     </motion.div>
   );
 };
