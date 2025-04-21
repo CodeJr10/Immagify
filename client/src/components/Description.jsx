@@ -18,7 +18,7 @@ const Description = () => {
 
       <div className="flex flex-col gap-5 md:gap-14 md:flex-row items-center">
         <img
-          src={assets.sample_img_1}
+          src={assets.sample_image_1}
           alt=""
           className="w-80 xl:w-96 rounded-lg"
         />

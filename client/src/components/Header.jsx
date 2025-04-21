@@ -87,7 +87,7 @@ const Header = () => {
           .fill("")
           .map((item, index) => (
             <motion.img
-              src={index % 2 == 0 ? assets.sample_img_2 : assets.sample_img_1}
+              src={index % 2 == 0 ? assets.sample_image_1 : assets.sample_img_1}
               alt=""
               key={index}
               width={70}
